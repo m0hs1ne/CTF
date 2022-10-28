@@ -31,8 +31,15 @@ It seems like `IndexController.php` is vulnerable:
 
 The first if statement is NOT vulnerable, as it’s using strict comparison (`===`, `!==`). So, we have to parse the type `POST` parameter.
 
-However, the `switch` statement is vulnerable.
+However, the `switch` statement is vulnerable, According to official [PHP documentation](https://www.php.net/manual/en/control-structures.switch.php) switch/case does [loose comparision](php.net/manual/en/types.comparisons.php#types.comparisions-loose).
+Since the case secrets is the first item, it can bypass the `REMOTE_ADDR`.
 
-According to official [PHP documentation](https://www.php.net/manual/en/control-structures.switch.php) switch/case does [loose comparision](php.net/manual/en/types.comparisons.php#types.comparisions-loose).
+So the final payload to be sent as a POST reqeust to api:
+```javascript
+fetch('[IP]/api/getfacts', {method:'POST',headers:{'Content-Type':'application/json'}, body:JSON.stringify({type: true})});
+```
 
-Since 
+We got the flag:
+```
+HTB{sw1tch_stat3m3nts_4r3_vuln3r4bl3!!!}
+```
